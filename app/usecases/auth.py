@@ -2,6 +2,7 @@ from app.core.security import hash_password, verify_password, create_access_toke
 from app.core.errors import ConflictError, UnauthorizedError, NotFoundError
 from app.repositories.users import UserRepository
 from app.schemas.user import UserRole
+from app.db.models import User
 
 
 class AuthUseCase:
@@ -12,7 +13,7 @@ class AuthUseCase:
     def __init__(self, user_repo: UserRepository):
         self.user_repo = user_repo
 
-    async def register(self, email: str, password: str) -> dict:
+    async def register(self, email: str, password: str) -> User:
         """
         Регистрация нового пользователя.
 
@@ -34,11 +35,7 @@ class AuthUseCase:
             role=UserRole.USER
         )
 
-        return {
-            "id": user.id,
-            "email": user.email,
-            "role": user.role,
-        }
+        return user
 
     async def login(self, email: str, password: str) -> dict:
         """
@@ -61,12 +58,9 @@ class AuthUseCase:
             role=user.role
         )
 
-        return {
-            "access_token": access_token,
-            "token_type": "bearer",
-        }
+        return {"access_token": access_token, "token_type": "bearer"}
 
-    async def get_profile(self, user_id: int) -> dict:
+    async def get_profile(self, user_id: int) -> User:
         """
         Получение публичного профиля пользователя по ID
 
@@ -78,9 +72,4 @@ class AuthUseCase:
         if not user:
             raise NotFoundError(f"User with id '{user_id}' not found")
 
-        return {
-            "id": user.id,
-            "email": user.email,
-            "role": user.role,
-            "created_at": user.created_at,
-        }
+        return user

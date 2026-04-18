@@ -28,7 +28,7 @@ async def register(
             email=register_data.email,
             password=register_data.password,
         )
-        return UserPublic(**user_data)
+        return UserPublic.model_validate(user_data)
     except ConflictError as e:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -79,7 +79,7 @@ async def get_me(
     """
     try:
         user_data = await auth_usecase.get_profile(user_id)
-        return UserPublic(**user_data)
+        return UserPublic.model_validate(user_data)
     except NotFoundError as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
