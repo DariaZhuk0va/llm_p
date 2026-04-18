@@ -1,12 +1,13 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 
-from sqlalchemy import String, DateTime, ForeignKey, Index
+from sqlalchemy import String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from app.db.base import Base
 from app.schemas.user import UserRole
+from app.schemas.chat import MessageRole
 
 
 class User(Base):
@@ -52,7 +53,7 @@ class ChatMessage(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id",
                                            ondelete="CASCADE"),
                                            nullable=False)
-    role: Mapped[str] = mapped_column(
+    role: Mapped[MessageRole] = mapped_column(
                                 String(20),
                                 nullable=False
                                 )

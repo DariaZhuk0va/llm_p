@@ -1,6 +1,13 @@
-# app/schemas/chat.py
+from enum import StrEnum
 from pydantic import BaseModel, Field
 from typing import Optional
+
+class MessageRole(StrEnum):
+    """
+    Роль отправителя сообщения в чате
+    """
+    USER = "user"
+    ASSISTANT = "assistant"
 
 
 class ChatRequest(BaseModel):
