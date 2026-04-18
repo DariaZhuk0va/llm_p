@@ -34,7 +34,7 @@ async def register(
             status_code=status.HTTP_409_CONFLICT,
             detail=str(e)
             )
-    except Exception as e:
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error"

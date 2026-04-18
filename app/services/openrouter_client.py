@@ -22,6 +22,8 @@ class OpenRouterClient:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
+            "HTTP-Referer": "http://localhost:8000", 
+            "X-Title": "My LLM App",                 
         }
         if self.referer:
             headers["HTTP-Referer"] = self.referer

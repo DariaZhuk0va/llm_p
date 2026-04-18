@@ -28,9 +28,9 @@ class Settings(BaseSettings):
     # OpenRouter
     OPENROUTER_API_KEY: str
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
-    OPENROUTER_DEFAULT_MODEL: str = "openai/gpt-3.5-turbo"
-    OPENROUTER_REFERER: str | None = None
-    OPENROUTER_TITLE: str | None = None
+    OPENROUTER_DEFAULT_MODEL: str = "openrouter/free"
+    OPENROUTER_REFERER: str | None = "http://localhost:8000"
+    OPENROUTER_TITLE: str | None = "My LLM App"
     OPENROUTER_TIMEOUT: float = 60.0
 
 settings = Settings()

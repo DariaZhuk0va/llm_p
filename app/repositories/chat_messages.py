@@ -25,11 +25,10 @@ class ChatMessageRepository:
 
         return: Созданный объект ChatMessage
         """
-        async with self._session.begin():
-            message = ChatMessage(user_id=user_id, role=role, content=content)
-            self._session.add(message)
-            await self._session.flush()
-            await self._session.refresh(message)
+        message = ChatMessage(user_id=user_id, role=role, content=content)
+        self._session.add(message)
+        await self._session.commit()
+        await self._session.refresh(message)
         return message
     
     async def get_last_n(self, user_id: int, n: int) -> List[ChatMessage]:
@@ -57,9 +56,9 @@ class ChatMessageRepository:
         """
         Удалить все сообщения пользователя
         """
-        async with self._session.begin():
-            stmt = delete(ChatMessage).where(ChatMessage.user_id == user_id)
-            await self._session.execute(stmt)
+        stmt = delete(ChatMessage).where(ChatMessage.user_id == user_id)
+        await self._session.execute(stmt)
+        await self._session.commit()
     
     async def get_all_for_user(self, user_id: int) -> List[ChatMessage]:
         """

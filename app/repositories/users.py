@@ -37,9 +37,8 @@ class UserRepository:
 
         return: Созданный объект User
         """
-        async with self._session.begin():
-            user = User(email=email, password_hash=password_hash, role=role)
-            self._session.add(user)
-            await self._session.flush()
-            await self._session.refresh(user)
+        user = User(email=email, password_hash=password_hash, role=role)
+        self._session.add(user)
+        await self._session.commit()
+        await self._session.refresh(user)
         return user

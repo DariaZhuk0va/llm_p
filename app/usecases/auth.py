@@ -55,10 +55,10 @@ class AuthUseCase:
 
         if not verify_password(password, user.password_hash):
             raise UnauthorizedError("Invalid email or password")
-
+        
         access_token = create_access_token(
             sub=str(user.id),
-            role=user.role.value 
+            role=user.role
         )
 
         return {

@@ -1,6 +1,6 @@
 from typing import Annotated
 
-import jwt
+from jose import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -66,7 +66,7 @@ async def get_current_user_id(token: Annotated[str, Depends(oauth2_scheme)]) -> 
         if user_id_str is None:
             raise UnauthorizedError("Token does not contain sub claim")
         return int(user_id_str)
-    except (jwt.InvalidTokenError, ValueError, UnauthorizedError) as e:
+    except (jwt.InvalidTokenError, ValueError, UnauthorizedError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication credentials",

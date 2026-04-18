@@ -51,7 +51,7 @@ class ChatUseCase:
 
         for msg in history:
             messages.append({
-                "role": msg.role.value, 
+                "role": msg.role, 
                 "content": msg.content,
             })
 
@@ -95,6 +95,6 @@ class ChatUseCase:
         """
         messages = await self.chat_repo.get_all_for_user(user_id)
         return [
-            {"role": msg.role.value, "content": msg.content, "created_at": msg.created_at.isoformat()}
+            {"role": msg.role, "content": msg.content, "created_at": msg.created_at.isoformat()}
             for msg in messages
         ]
