@@ -1,7 +1,3 @@
-# app/core/security.py
-"""
-Утилиты для безопасности: хеширование паролей и JWT токены.
-"""
 from __future__ import annotations
 
 import time
