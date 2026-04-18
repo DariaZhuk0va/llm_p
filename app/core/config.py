@@ -31,5 +31,6 @@ class Settings(BaseSettings):
     OPENROUTER_DEFAULT_MODEL: str = "openai/gpt-3.5-turbo"
     OPENROUTER_REFERER: str | None = None
     OPENROUTER_TITLE: str | None = None
+    OPENROUTER_TIMEOUT: float = 60.0
 
 settings = Settings()
