@@ -60,3 +60,11 @@ class ChatMessageRepository:
         async with self._session.begin():
             stmt = delete(ChatMessage).where(ChatMessage.user_id == user_id)
             await self._session.execute(stmt)
+    
+    async def get_all_for_user(self, user_id: int) -> List[ChatMessage]:
+        """
+        Возвращает все сообщения пользователя
+        """
+        stmt = select(ChatMessage).where(ChatMessage.user_id == user_id).order_by(ChatMessage.created_at)
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all())

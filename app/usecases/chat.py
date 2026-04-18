@@ -88,3 +88,13 @@ class ChatUseCase:
         user_id: ID пользователя
         """
         await self.chat_repo.delete_all_for_user(user_id)
+    
+    async def get_history(self, user_id: int) -> List[dict]:
+        """
+        Возвращает все сообщения пользователя
+        """
+        messages = await self.chat_repo.get_all_for_user(user_id)
+        return [
+            {"role": msg.role.value, "content": msg.content, "created_at": msg.created_at.isoformat()}
+            for msg in messages
+        ]
